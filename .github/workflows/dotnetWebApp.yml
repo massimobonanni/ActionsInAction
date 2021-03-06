@@ -21,8 +21,10 @@ jobs:
       run: dotnet build --no-restore MyAmazingWeb
     - name: Test
       run: dotnet test --no-build --verbosity normal MyAmazingWeb
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
-      with:
-        name: WebAppArtifact
-        retention-days: 5
+    - name: Publish
+      run: dotnet publish -c Release -o dotnetcorewebapp MyAmazingWeb 
+    - name: 'Run Azure webapp deploy action using publish profile credentials'
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: myamazingwebapp
+        publish-profile: $MYAMAZINGWEBAPP_PUBLISH_PROFILE
