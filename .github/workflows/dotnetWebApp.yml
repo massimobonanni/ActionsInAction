@@ -27,4 +27,5 @@ jobs:
       uses: azure/webapps-deploy@v1
       with: 
         app-name: myamazingwebapp
-        publish-profile: $MYAMAZINGWEBAPP_PUBLISH_PROFILE
+        publish-profile: MYAMAZINGWEBAPP_PUBLISH_PROFILE
+        package: './ActionsInAction/dotnetcorewebapp/'
