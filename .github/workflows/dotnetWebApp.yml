@@ -21,3 +21,8 @@ jobs:
       run: dotnet build --no-restore MyAmazingWeb
     - name: Test
       run: dotnet test --no-build --verbosity normal MyAmazingWeb
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: WebAppArtifact
+        retention-days: 5
