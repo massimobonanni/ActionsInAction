@@ -23,7 +23,23 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal MyAmazingWeb
     - name: Publish
-      run: dotnet publish -c Release -o dotnetcorewebapp MyAmazingWeb 
+      run: dotnet publish -c Release -o dotnetcorewebapp MyAmazingWeb
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: webapp
+        path: dotnetcorewebapp
+    
+  deploy:
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.1.0
+      with:
+        name: webapp
+        path: dotnetcorewebapp
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v1
       with: 
