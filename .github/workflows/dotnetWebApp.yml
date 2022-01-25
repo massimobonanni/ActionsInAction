@@ -7,9 +7,7 @@ on:
       - '.github/workflows/**'
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -31,9 +29,8 @@ jobs:
         path: dotnetcorewebapp
     
   deploy:
-    
     runs-on: ubuntu-latest
-
+    needs: [build]
     steps:
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2.1.0
