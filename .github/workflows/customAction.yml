@@ -1,0 +1,15 @@
+on: [workflow_dispatch]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Call wait action
+        id: wait
+        uses: actions/myfirstaction/wait
+        with:
+          milliseconds: 5000
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.wait.outputs.time }}"
