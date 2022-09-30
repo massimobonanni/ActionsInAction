@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Call wait action
         id: wait
-        uses: ./actions/wait
+        uses: ./actions/myfirstaction
         with:
           milliseconds: 5000
       # Use the output from the `hello` step
