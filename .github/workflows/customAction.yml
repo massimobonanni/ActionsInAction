@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Call wait action
         id: wait
-        uses: ./.github/actions/myFirstAction
+        uses: ./actions/wait
         with:
           milliseconds: 5000
       # Use the output from the `hello` step
