@@ -39,7 +39,7 @@ jobs:
         name: webapp
         path: dotnetcorewebapp
     - name: 'Run Azure webapp deploy action using publish profile credentials'
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v1
       with: 
         app-name: myamazingwebapp
         publish-profile: ${{ secrets.MYAMAZINGWEBAPP_PUBLISH_PROFILE }}
