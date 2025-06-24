@@ -1,0 +1,15 @@
+name: Custom Action Triggered via REST API
+
+on:
+  repository_dispatch:
+    types: [custom-event]
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run a sample command
+        run: echo "GitHub Action triggered via REST API!"
