@@ -1,0 +1,55 @@
+name: Create Release and Publish Artifact
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore MyAmazingWeb/MyAmazingWeb.csproj
+
+      - name: Build
+        run: dotnet build MyAmazingWeb/MyAmazingWeb.csproj --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish MyAmazingWeb/MyAmazingWeb.csproj --configuration Release --output ./publish --no-build
+
+      - name: Zip published files
+        run: zip -r MyAmazingWeb.zip ./publish
+
+      - name: Create GitHub Release (github-script)
+        id: create_release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const tag = `v${{ github.run_number }}`;
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              name: `Release ${tag}`,
+              body: `Automated release for build ${{ github.run_number }}.\nThis release contains the latest build artifact of the web site.`,
+              draft: false,
+              prerelease: false
+            });
+            core.setOutput('upload_url', release.data.upload_url);
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: MyAmazingWeb.zip
+          asset_name: MyAmazingWeb.zip
+          asset_content_type: application/zip
