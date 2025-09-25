@@ -413,3 +413,4 @@ FodyWeavers.xsd
 *.msp
 
 */*.Development.json
+MyAmazingWeb/appsettings.Development.json
