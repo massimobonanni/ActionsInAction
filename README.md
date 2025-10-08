@@ -1,3 +1,2 @@
 # ActionsInAction
 
-Test di documentazione
